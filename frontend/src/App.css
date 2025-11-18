@@ -80,12 +80,11 @@
   background-color: #f4f6f8;
   border-radius: var(--border-radius);
   padding: 4px;
-  margin: 0 auto 1rem auto;
+
 }
 
 .ToggleButton {
   flex: 1;
-  padding: 3px;
   background: transparent;
   border: none;
   border-radius: var(--border-radius);
@@ -110,7 +109,7 @@
 .LoginFormContent {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+
   text-align: left;
 }
 

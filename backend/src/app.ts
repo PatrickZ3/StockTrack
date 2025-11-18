@@ -1,20 +1,15 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
-
-dotenv.config()
+import testRoute from './routes/test'
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use("/test-db", testRoute);
 
 app.get("/", (req, res) => {
     res.send("Backend server is running");
 })
 
-const PORT =  process.env.PORT || 3001;
-
-app.listen(PORT, () => {
-    console.log(`Server running at http:/localhost:${PORT}`);
-})
+export default app;

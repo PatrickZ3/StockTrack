@@ -1,0 +1,1 @@
+// querying the db for transactions, joining products, manual filtering if needed
