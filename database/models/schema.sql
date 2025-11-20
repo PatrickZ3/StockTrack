@@ -40,9 +40,16 @@ CREATE TABLE product_comments (
 CREATE TABLE transactions (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    note TEXT,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- TRANSACTIONS ITEMS a list of TRANSACTIONS
+CREATE TABLE transaction_items (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    transaction_id UUID REFERENCES transactions(id) ON DELETE CASCADE,
     product_id UUID REFERENCES products(id) ON DELETE CASCADE,
     quantity_deducted INTEGER NOT NULL,
-    note TEXT,
     created_at TIMESTAMP DEFAULT NOW()
 );
 -- TRIGGERS (auto update timestamps)
@@ -166,32 +173,26 @@ VALUES (
         'Out of stock soon — need restock order.'
     ) ON CONFLICT DO NOTHING;
 -- Seed Transactions
-INSERT INTO transactions (user_id, product_id, quantity_deducted, note)
+INSERT INTO transactions (user_id, note)
 VALUES (
-        (
-            SELECT id
-            FROM users
-            WHERE company_name = 'Alpha Builders'
-        ),
-        (
-            SELECT id
-            FROM products
-            WHERE name = 'Concrete Bag'
-        ),
-        30,
-        'Used for Project A foundation'
-    ),
-    (
-        (
-            SELECT id
-            FROM users
-            WHERE company_name = 'Beta Manufacturing'
-        ),
-        (
-            SELECT id
-            FROM products
-            WHERE name = 'Aluminum Sheet'
-        ),
-        50,
-        'Order for custom machinery parts'
-    ) ON CONFLICT DO NOTHING;
+    (SELECT id FROM users WHERE company_name = 'Alpha Builders'),
+    'Used for Project A'
+),
+(
+    (SELECT id FROM users WHERE company_name = 'Beta Manufacturing'),
+    'Machinery parts order'
+);
+
+-- Add items to those transactions
+INSERT INTO transaction_items (transaction_id, product_id, quantity_deducted)
+VALUES
+(
+    (SELECT id FROM transactions LIMIT 1),
+    (SELECT id FROM products WHERE name = 'Concrete Bag'),
+    30
+),
+(
+    (SELECT id FROM transactions OFFSET 1 LIMIT 1),
+    (SELECT id FROM products WHERE name = 'Aluminum Sheet'),
+    50
+);
