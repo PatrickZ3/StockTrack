@@ -45,13 +45,9 @@ function Transactions() {
   return (
     <div>
       <Navbar />
-
-      <p>
-        transactionsss
-      </p>
-      <ul>
+      <div>
         {transactions.map((t) => (
-          <li key={t.id} style={{ marginBottom: "20px" }}>
+          <div key={t.id}>
             Transaction:{t.id}
             <br />
             Note:{t.note || "No note"}
@@ -61,17 +57,17 @@ function Transactions() {
             {t.items.length === 0 ? (
               <p>No items in this transaction.</p>
             ) : (
-              <ul style={{ marginLeft: "20px" }}>
+              <div>
                 {t.items.map((item) => (
-                  <li key={item.id}>
+                  <div key={item.id}>
                     {item.product_name} — {item.quantity_deducted}
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </div>
             )}
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
 
 
     </div>
