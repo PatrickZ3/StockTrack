@@ -18,7 +18,7 @@ function Navbar() {
                     <Package size={24} color="white" strokeWidth={2.5} />
                 </div>
                 <div className="LeftNavBarText">
-                    <div style={{ fontFamily: "Tatsuki", fontWeight: 700, fontSize: "2.5rem" }}>Inventory Tracker</div>
+                    <div style={{ fontFamily: "Tatsuki", fontWeight: 700, fontSize: "2.5rem", cursor: "pointer" }} onClick={handleClick}>Inventory Tracker</div>
                 </div>
             </div>
             <div className="RightNavBar">
