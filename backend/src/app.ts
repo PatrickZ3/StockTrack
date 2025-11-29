@@ -3,6 +3,7 @@ import cors from "cors";
 import testRoute from './routes/test';
 import transactionRoute from './routes/transactions.routes';
 import authRoutes from './routes/auth.routes';
+import productRoutes from './routes/products.routes'
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use("/test-db", testRoute);
 app.use("/transactions", transactionRoute);
 app.use("/auth", authRoutes)
+app.use("/products", productRoutes)
 
 app.get("/", (req, res) => {
     res.send("Backend server is running");

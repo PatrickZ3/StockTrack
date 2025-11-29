@@ -8,6 +8,7 @@ const cors_1 = __importDefault(require("cors"));
 const test_1 = __importDefault(require("./routes/test"));
 const transactions_routes_1 = __importDefault(require("./routes/transactions.routes"));
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
+const products_routes_1 = __importDefault(require("./routes/products.routes"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
@@ -15,6 +16,7 @@ app.use(express_1.default.json());
 app.use("/test-db", test_1.default);
 app.use("/transactions", transactions_routes_1.default);
 app.use("/auth", auth_routes_1.default);
+app.use("/products", products_routes_1.default);
 app.get("/", (req, res) => {
     res.send("Backend server is running");
 });

@@ -1,4 +1,3 @@
-import React from 'react';
 import Overview from './stocks-component/overview';
 import ProductLog from './stocks-component/product-log';
 
