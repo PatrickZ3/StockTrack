@@ -33,8 +33,16 @@ function Stocks() {
     };
     fetchProducts();
   },[]);
+  
+  if (loading) {
+    return (
+      <div className="stocks" style={{ padding: "2rem", fontSize: "1.5rem" }}>
+        Loading products...
+      </div>
+    );
+  }
 
-  http://localhost:4000/products
+  
   return (
     <div className='stocks'>
       <Overview data={products} />

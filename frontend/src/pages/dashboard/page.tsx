@@ -1,6 +1,6 @@
 import Navbar from '../../components/navbar';
 import Stocks from '../../components/stocks';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // components in dashboard: 
 // Navbar
@@ -8,12 +8,17 @@ import { useEffect } from 'react';
 
 function Dashboard() {
 
+  const [companyName, setCompanyName] = useState("");
+
   useEffect(() => {
     const userJson = localStorage.getItem("user");
 
     if (userJson){
       const user = JSON.parse(userJson)
       console.log("Logged in user", user)
+      if(user.company_name){
+        setCompanyName(user.company_name);
+      }
     } else {
       console.log("No user found in local storage")
     }
@@ -23,7 +28,7 @@ function Dashboard() {
     <div>
       
         <Navbar  />
-        <div style={{ fontFamily: "Tatsuki", fontWeight: 400, fontSize: "3rem" }}>Product Dashboard</div>
+        <div style={{ fontFamily: "Tatsuki", fontWeight: 400, fontSize: "3rem" }}>{companyName ? `${companyName} Product Dashboard` : "Product Dashboard"}</div>
         <Stocks />
     </div>
   );

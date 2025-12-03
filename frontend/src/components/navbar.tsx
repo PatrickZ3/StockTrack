@@ -2,6 +2,7 @@ import { Package } from 'lucide-react';
 import TransactionsButton from './buttons/transactions-button';
 import CheckOutButton from './buttons/check-out-button';
 import { useNavigate } from 'react-router-dom';
+import LogOutButton from './buttons/log-out-button';
 
 function Navbar() {
 
@@ -27,6 +28,9 @@ function Navbar() {
                 </div>
                 <div className="CheckOutButton">
                     <CheckOutButton />
+                </div>
+                <div className="LogOutButton">
+                    <LogOutButton />
                 </div>
             </div>
         </div>
