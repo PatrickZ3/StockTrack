@@ -28,11 +28,11 @@ function LoginForm() {
 
     const endpoint = "http://localhost:4000/auth/login";
 
-    const payload = isLogin ? {email, password} : {companyName, email, password};
+    const payload = isLogin ? { email, password } : { companyName, email, password };
 
     const res = await fetch(endpoint, {
-      method:"POST",
-      headers: {"Content-Type": "application/json"},
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
 
@@ -40,61 +40,63 @@ function LoginForm() {
 
     console.log("FE CLIENT LOGIN RESPONSE:", data);
 
-    if (res.ok){
+    if (res.ok) {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
       alert("success");
-      if (isLogin) window.location.href= "/dashboard"
-    } else{
+      if (isLogin) window.location.href = "/dashboard"
+    } else {
       alert(data.error || "Something went wrong");
     }
   }
 
   return (
     <form className="LoginContainer" onSubmit={handleSubmit}>
-    <div className="LoginContainer">
-      <div className="LoginToggle">
-        <button
-          className={`ToggleButton ${isLogin ? "active" : ""}`}
-          onClick={() => setIsLogin(true)}
-        >
-          Login
-        </button>
-        <button
-          className={`ToggleButton ${!isLogin ? "active" : ""}`}
-          onClick={() => setIsLogin(false)}
-        >
-          Register
-        </button>
+      <div className="LoginContainer">
+        <div className="LoginToggle">
+          <button
+            className={`ToggleButton ${isLogin ? "active" : ""}`}
+            onClick={() => setIsLogin(true)}
+          >
+            Login
+          </button>
+          <button
+            className={`ToggleButton ${!isLogin ? "active" : ""}`}
+            onClick={() => setIsLogin(false)}
+          >
+            Register
+          </button>
+        </div>
+
+        {isLogin ? (
+          <div className="Form LoginForm">
+            <div className="LoginFormContent">
+              <label>Email</label>
+              <input type="email" placeholder="name@company.com" onChange={(e) => setEmail(e.target.value)} required />
+              <label>Password</label>
+              <input type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} required />
+              <button type="submit" className="SignInButton">
+                Sign in
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="Form RegisterForm">
+            <div className="LoginFormContent">
+              <label>Company Name</label>
+              <input type="text" placeholder="Your company inc." onChange={(e) => setCompanyName(e.target.value)} required />
+              <label>Email</label>
+              <input type="email" placeholder="name@company.com" onChange={(e) => setEmail(e.target.value)} required />
+              <label>Password</label>
+              <input type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} required />
+              <button type="submit" className="SignInButton">
+                Create account
+              </button>
+            </div>
+          </div>
+        )}
+
       </div>
-
-      {isLogin ? (
-        <div className="Form LoginForm">
-          <div className="LoginFormContent">
-            <label>Email</label>
-            <input type="email" placeholder="name@company.com" onChange={(e) => setEmail(e.target.value)} required />
-            <label>Password</label>
-            <input type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)}     required />
-            <button type="submit" className="SignInButton">
-              Sign in
-            </button>
-          </div>
-        </div>
-      ) : (
-        <div className="Form RegisterForm">
-          <div className="LoginFormContent">
-            <label>Company Name</label>
-            <input type="text" placeholder="Your company inc." onChange={(e) => setCompanyName(e.target.value)} required />
-            <label>Email</label>
-            <input type="email" placeholder="name@company.com" onChange={(e) => setEmail(e.target.value)} required />
-            <label>Password</label>
-            <input type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} required />
-            <button type="submit" className="SignInButton">
-              Create account
-            </button>
-          </div>
-        </div>
-      )}
-
-    </div>
     </form>
   );
 }
