@@ -26,11 +26,11 @@
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
 
-      // const endpoint = isLogin ? "/api/login" : "/api/register";
+      const endpoint = isLogin ? "http://localhost:4000/auth/login" : "http://localhost:4000/auth/register";
 
-      const endpoint = "http://localhost:4000/auth/login";
+      // const endpoint = "http://localhost:4000/auth/login";
 
-      const payload = isLogin ? { email, password } : { companyName, email, password };
+      const payload = isLogin ? { email, password } : { company_name: companyName, email, password };
 
       const res = await fetch(endpoint, {
         method: "POST",
@@ -45,7 +45,7 @@
       if (res.ok) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
-        if (isLogin) window.location.href = "/dashboard"
+        window.location.href = "/dashboard"
       } else {
         alert(data.error || "Something went wrong");
       }
