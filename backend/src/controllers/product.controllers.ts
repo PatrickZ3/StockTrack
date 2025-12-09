@@ -4,6 +4,7 @@ import {
   fetchProducts,
   createProduct,
   editProduct,
+  deleteProduct,
 } from "../services/product.services";
 
 export const getProducts = async (req: AuthRequest, res: Response) => {
@@ -86,7 +87,7 @@ export const alterProducts = async (req: AuthRequest, res: Response) => {
       });
     }
 
-    const alteredProduct = await editProduct(product_id,user_id, {
+    const alteredProduct = await editProduct(product_id, user_id, {
       name,
       description,
       quantity,
@@ -104,6 +105,47 @@ export const alterProducts = async (req: AuthRequest, res: Response) => {
     res.status(400).json({
       success: false,
       message: "server error creating product",
+    });
+  }
+};
+
+export const removeProduct = async (req: AuthRequest, res: Response) => {
+  try {
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({
+        success: false,
+        message: "User not authenticated",
+      });
+    }
+
+    const product_id = req.params.id;
+    if (!product_id) {
+      return res.status(400).json({
+        success: false,
+        message: "Product ID is required",
+      });
+    }
+
+    const removed = await deleteProduct(product_id);
+
+    if (!removed) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Product deleted successfully",
+      product: removed,
+    });
+  } catch (err: any) {
+    console.error("Delete product controller error:", err);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error deleting product",
     });
   }
 };

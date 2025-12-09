@@ -69,3 +69,20 @@ export const editProduct = async (
   const result = await query(sql, values);
   return result.rows[0];
 };
+
+export const deleteProduct = async (
+  product_id: string,  
+) : Promise<Product | null> => {
+  const sql = `DELETE FROM products WHERE id = $1
+  RETURNING *`;
+
+  const values = [
+    product_id
+  ];
+
+  const result = await query(sql, values);
+  if (result.rows.length === 0){
+    return null;
+  }
+  return result.rows[0];
+};

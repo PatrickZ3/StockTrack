@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.alterProducts = exports.addProducts = exports.getProducts = void 0;
+exports.removeProduct = exports.alterProducts = exports.addProducts = exports.getProducts = void 0;
 const product_services_1 = require("../services/product.services");
 const getProducts = async (req, res) => {
     try {
@@ -94,3 +94,40 @@ const alterProducts = async (req, res) => {
     }
 };
 exports.alterProducts = alterProducts;
+const removeProduct = async (req, res) => {
+    try {
+        if (!req.user || !req.user.id) {
+            return res.status(401).json({
+                success: false,
+                message: "User not authenticated",
+            });
+        }
+        const product_id = req.params.id;
+        if (!product_id) {
+            return res.status(400).json({
+                success: false,
+                message: "Product ID is required",
+            });
+        }
+        const removed = await (0, product_services_1.deleteProduct)(product_id);
+        if (!removed) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found",
+            });
+        }
+        return res.status(200).json({
+            success: true,
+            message: "Product deleted successfully",
+            product: removed,
+        });
+    }
+    catch (err) {
+        console.error("Delete product controller error:", err);
+        return res.status(500).json({
+            success: false,
+            message: "Server error deleting product",
+        });
+    }
+};
+exports.removeProduct = removeProduct;

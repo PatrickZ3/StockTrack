@@ -92,6 +92,42 @@ function ProductModal({ isOpen, onClose, mode = 'add', productId, initialData }:
         }
     }
 
+    const handleDelete = async () => {
+        if (!productId) return;
+
+        const confirmDelete = window.confirm(
+            `Are you sure you want to delete "${initialData?.name || "This product"}"?`
+        );
+
+        if (!confirmDelete) return;
+
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                console.log("No token found");
+                return;
+            }
+
+            const url = `http://localhost:4000/products/${productId}`;
+
+            const response = await fetch(url, { method: "DELETE", headers: { Authorization: `Bearer ${token}` } });
+
+            const data = await response.json()
+
+            if (!data.success) {
+                alert(data.message || "Error deleting product");
+                return;
+            }
+
+            onClose();
+            window.location.reload();
+
+        } catch (err: any) {
+            console.error("Error deleting product", err);
+            alert("Server error deleting product");
+        }
+    };
+
     return (
         <Modal show={isOpen} onHide={onClose} centered size="lg" dialogClassName='wideModal'>
             <Modal.Header closeButton className='modalHeader'>
@@ -188,11 +224,7 @@ function ProductModal({ isOpen, onClose, mode = 'add', productId, initialData }:
                 {mode === 'edit' && (
                     <Button
                         variant="danger"
-                        onClick={() => {
-                            console.log('Delete product:', formData.name);
-                            // TODO: replace with your actual delete logic later
-                            onClose();
-                        }}
+                        onClick={handleDelete}
                         className="formButton"
                     >
                         Delete

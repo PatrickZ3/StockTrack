@@ -7,4 +7,5 @@ const router = (0, express_1.Router)();
 router.get("/", authMiddleware_1.authMiddleware, product_controllers_1.getProducts);
 router.post("/", authMiddleware_1.authMiddleware, product_controllers_1.addProducts);
 router.put("/:id", authMiddleware_1.authMiddleware, product_controllers_1.alterProducts);
+router.delete("/:id", authMiddleware_1.authMiddleware, product_controllers_1.removeProduct);
 exports.default = router;
