@@ -614,3 +614,110 @@
   padding: 0rem 1rem 0rem 1rem;
 
 }
+
+/* Checkout Page Styles */
+.checkoutContainer {
+  width: 90%;
+  margin: 2rem auto;
+  
+}
+
+.checkoutHeading {
+  font-family: Tatsuki;
+  font-size: 3rem;
+  text-align: left;
+}
+
+.checkoutItem {
+  background: white;
+  border-radius: 12px;
+  padding: 1.2rem;
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1), 0 1px 1px rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.1);
+  gap: 1rem;
+}
+
+.itemDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.itemName {
+  font-family: Tatsuki;
+  font-size: 3rem;
+  margin: 0;
+}
+
+.itemPrice {
+  font-family: Tatsuki;
+  font-size: 2.2rem;
+  color: gray;
+}
+
+.quantityController {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.qtyButton {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: white;
+  font-size: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qtyText {
+  font-size: 2rem;
+  font-family: Tatsuki;
+}
+
+.maxText {
+  color: gray;
+  font-size: 2rem;
+  font-family: Tatsuki;
+}
+
+.itemActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.deleteButton {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.totalPrice {
+  font-family: Tatsuki;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.grandTotal {
+  margin-top: 2rem;
+  font-family: Tatsuki;
+  font-size: 2.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}

@@ -32,6 +32,33 @@ function Card({ data }: OverviewProps) {
     setShowModal(true);
   }
 
+  const handleAddToCart = (product:any) => {
+    const itemToSave = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      quantity: 1,
+      category: product.category,
+      stock: product.quantity
+    };
+// get existing cart
+    const existing = localStorage.getItem("cart");
+    let cart = existing ? JSON.parse(existing) : [];
+
+    const exists = cart.find((p:any) => p.id === product.id);
+
+    if(!exists){
+      cart.push(itemToSave);
+    }else{
+      exists.quantity = Math.min(exists.quantity + 1, exists.stock);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    console.log("saved to cart", cart);
+
+  }
+
   
   return (
     <div>
@@ -76,7 +103,7 @@ function Card({ data }: OverviewProps) {
                   </div>
                 </div>
                 <div className='cardFooterRight'>
-                  <div className='footerButton'>
+                  <div className='footerButton'onClick={() => handleAddToCart(item)}>
                     Add To Cart<Plus size={14} />
                   </div>
                   <div className='footerButton' onClick={() => handleCardClick(item)}>
