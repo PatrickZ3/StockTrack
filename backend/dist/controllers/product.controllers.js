@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addProducts = exports.getProducts = void 0;
+exports.alterProducts = exports.addProducts = exports.getProducts = void 0;
 const product_services_1 = require("../services/product.services");
 const getProducts = async (req, res) => {
     try {
@@ -33,7 +33,14 @@ const addProducts = async (req, res) => {
                 message: "Product name is required",
             });
         }
-        const newProduct = await (0, product_services_1.createProduct)(user_id, { name, description, quantity, price, category, status });
+        const newProduct = await (0, product_services_1.createProduct)(user_id, {
+            name,
+            description,
+            quantity,
+            price,
+            category,
+            status,
+        });
         res.status(201).json({
             success: true,
             message: newProduct,
@@ -43,8 +50,47 @@ const addProducts = async (req, res) => {
         console.log("ERROR", error);
         res.status(400).json({
             success: false,
-            message: "server error creating product"
+            message: "server error creating product",
         });
     }
 };
 exports.addProducts = addProducts;
+const alterProducts = async (req, res) => {
+    try {
+        if (!req.user || !req.user.id) {
+            return res.status(401).json({
+                success: false,
+                message: "User not authenticated",
+            });
+        }
+        const user_id = req.user.id;
+        const product_id = req.params.id;
+        const { name, description, quantity, price, category, status } = req.body;
+        if (!name) {
+            return res.status(400).json({
+                success: false,
+                message: "Product name is required",
+            });
+        }
+        const alteredProduct = await (0, product_services_1.editProduct)(product_id, user_id, {
+            name,
+            description,
+            quantity,
+            price,
+            category,
+            status,
+        });
+        res.status(201).json({
+            success: true,
+            message: alteredProduct,
+        });
+    }
+    catch (err) {
+        console.log("ERROR", err);
+        res.status(400).json({
+            success: false,
+            message: "server error creating product",
+        });
+    }
+};
+exports.alterProducts = alterProducts;

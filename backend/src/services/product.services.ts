@@ -21,12 +21,51 @@ export const createProduct = async (
     status: string;
   }
 ): Promise<Product[]> => {
-    const sql = `INSERT INTO PRODUCTS ( user_id, name, description, quantity, price, category, status)
+  const sql = `INSERT INTO PRODUCTS ( user_id, name, description, quantity, price, category, status)
     values ($1,$2,$3,$4,$5,$6,$7)
     RETURNING *;`;
 
-    const values = [user_id, data.name, data.description, data.quantity, data.price, data.category, data.status];
+  const values = [
+    user_id,
+    data.name,
+    data.description,
+    data.quantity,
+    data.price,
+    data.category,
+    data.status,
+  ];
 
-    const result = await query(sql, values);
-    return result.rows[0];
+  const result = await query(sql, values);
+  return result.rows[0];
+};
+
+export const editProduct = async (
+  product_id: string,  
+  user_id: string,
+  data: {
+    name: string;
+    description: string;
+    quantity: number;
+    price: number;
+    category: string;
+    status: string;
+  }
+) : Promise<Product[]> => {
+  const sql = `UPDATE PRODUCTS SET name = $3, description = $4, quantity = $5, price = $6 , category = $7, status = $8
+  WHERE id = $1 AND user_id = $2
+  RETURNING *;`;
+
+  const values = [
+    product_id,  
+    user_id,
+    data.name,
+    data.description,
+    data.quantity,
+    data.price,
+    data.category,
+    data.status,
+  ];
+
+  const result = await query(sql, values);
+  return result.rows[0];
 };

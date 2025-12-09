@@ -5,6 +5,7 @@ interface ProductModalProp {
     isOpen: boolean;
     onClose: () => void;
     mode?: 'add' | 'edit';
+    productId?: string;
     initialData?: {
         name: string;
         description: string;
@@ -15,7 +16,7 @@ interface ProductModalProp {
     };
 }
 
-function ProductModal({ isOpen, onClose, mode = 'add', initialData }: ProductModalProp) {
+function ProductModal({ isOpen, onClose, mode = 'add', productId, initialData }: ProductModalProp) {
     const [formData, setFormData] = useState(
         initialData || {
             name: '',
@@ -56,14 +57,18 @@ function ProductModal({ isOpen, onClose, mode = 'add', initialData }: ProductMod
     }
 
     const handleSave = async () => {
-       try{
+        try {
             const token = localStorage.getItem("token");
-            if (!token){
+            if (!token) {
                 console.log("No token found");
                 return;
             }
+            const url =
+                mode === "add"
+                    ? "http://localhost:4000/products"
+                    : `http://localhost:4000/products/${productId}`;
 
-            const response = await fetch("http://localhost:4000/products", {
+            const response = await fetch(url, {
                 method: mode === "add" ? "POST" : "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -74,17 +79,17 @@ function ProductModal({ isOpen, onClose, mode = 'add', initialData }: ProductMod
             const data = await response.json();
             console.log("Product save response", data);
 
-            if(!data.success){
+            if (!data.success) {
                 alert(data.message || "Error saving products");
                 return;
             }
 
             onClose();
-            window.location.reload(); 
-            
-       }catch(error:any){
-        console.error("Error saving product", error)
-       }
+            window.location.reload();
+
+        } catch (error: any) {
+            console.error("Error saving product", error)
+        }
     }
 
     return (

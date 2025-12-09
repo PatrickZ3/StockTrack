@@ -92,6 +92,7 @@ function Card({ data }: OverviewProps) {
         isOpen={showModal}
         onClose={() => setShowModal(false)}
         mode="edit"
+        productId={selectedProduct?.id}    
         initialData={selectedProduct}
       />
     </div>
