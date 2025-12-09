@@ -55,9 +55,36 @@ function ProductModal({ isOpen, onClose, mode = 'add', initialData }: ProductMod
         setFormData((prev) => ({ ...prev, [name]: value }));
     }
 
-    const handleSave = () => {
-        console.log('Product Data:', formData);
-        onClose();
+    const handleSave = async () => {
+       try{
+            const token = localStorage.getItem("token");
+            if (!token){
+                console.log("No token found");
+                return;
+            }
+
+            const response = await fetch("http://localhost:4000/products", {
+                method: mode === "add" ? "POST" : "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(formData)
+            });
+            const data = await response.json();
+            console.log("Product save response", data);
+
+            if(!data.success){
+                alert(data.message || "Error saving products");
+                return;
+            }
+
+            onClose();
+            window.location.reload(); 
+            
+       }catch(error:any){
+        console.error("Error saving product", error)
+       }
     }
 
     return (

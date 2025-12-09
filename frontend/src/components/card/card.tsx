@@ -32,6 +32,7 @@ function Card({ data }: OverviewProps) {
     setShowModal(true);
   }
 
+  
   return (
     <div>
       <div className='controlBar'>

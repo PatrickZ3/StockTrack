@@ -27,14 +27,7 @@ CREATE TABLE products (
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
 );
--- PRODUCT COMMENTS (each comment belongs to a product)
-CREATE TABLE product_comments (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    product_ID UUID REFERENCES products(id) ON DELETE CASCADE,
-    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-    comment TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW()
-);
+
 -- TRANSACTIONS / CHECKOUT LOG
 -- Records inventory deductions
 CREATE TABLE transactions (
@@ -139,38 +132,6 @@ VALUES (
         5.00,
         'wood',
         'paused'
-    ) ON CONFLICT DO NOTHING;
--- Seed Comments
-INSERT INTO product_comments (product_id, user_id, comment)
-VALUES (
-        (
-            SELECT p.id
-            FROM products p
-                JOIN users u ON p.user_id = u.id
-            WHERE p.name = 'Steel Beam'
-                AND u.company_name = 'Alpha Builders'
-        ),
-        (
-            SELECT id
-            FROM users
-            WHERE company_name = 'Alpha Builders'
-        ),
-        'Batch quality verified — ready for site use.'
-    ),
-    (
-        (
-            SELECT p.id
-            FROM products p
-                JOIN users u ON p.user_id = u.id
-            WHERE p.name = 'Wood Plank'
-                AND u.company_name = 'Gamma Retail'
-        ),
-        (
-            SELECT id
-            FROM users
-            WHERE company_name = 'Gamma Retail'
-        ),
-        'Out of stock soon — need restock order.'
     ) ON CONFLICT DO NOTHING;
 -- Seed Transactions
 INSERT INTO transactions (user_id, note)

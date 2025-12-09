@@ -11,7 +11,6 @@ DROP FUNCTION IF EXISTS update_timestamp();
 -- Drop tables (in reverse order of dependency)
 DROP TABLE IF EXISTS transaction_items CASCADE;
 DROP TABLE IF EXISTS transactions CASCADE;
-DROP TABLE IF EXISTS product_comments CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
