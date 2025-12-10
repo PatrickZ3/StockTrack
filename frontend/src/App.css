@@ -721,3 +721,43 @@
   flex-direction: column;
   align-items: flex-start;
 }
+
+
+.checkoutFooter {
+  background: #f4f8ff;
+  border-radius: 12px;
+  padding: 1.2rem;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(0, 0, 0, 0.05); 
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  gap: 1rem;
+}
+
+.checkoutFooterRow {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.checkOutFooterTitle{
+  font-family: Tatsuki;
+  font-size: 3rem;
+  margin: 0;
+}
+
+.checkoutButton{
+  font-family: "Tatsuki";
+  font-size: 2rem;
+  padding: 0rem 1rem 0rem 1rem;
+  background: #e3edff;        /* soft blue */
+  color: #1b2a4a;             /* deep navy */
+  border: 1px solid #c7d8ff;
+
+  border-radius: 12px;
+  width: 100%;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: 0.2s ease;
+}

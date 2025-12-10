@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "../../components/navbar";
 import { Trash2, Plus, Minus } from "lucide-react";
+import { Button } from "react-bootstrap";
 
 function CheckOut() {
   const [cartItems, setCartItems] = useState<any[]>([]);
@@ -80,17 +81,32 @@ function CheckOut() {
         ))}
 
         {cartItems.length > 0 && (
-          <div className="grandTotal">
-            <div>
-              Total Items: {cartItems.reduce((sum, i) => sum + i.quantity, 0)}
-            </div>
-            <div>Grand Total: $
-              {cartItems
-                .reduce((sum, i) => sum + i.price * i.quantity, 0)
-                .toFixed(2)}</div>
+          <div className="checkoutFooter">
 
+            <div className="checkoutFooterRow">
+              <div className="checkOutFooterTitle">Total Items:</div>
+              <div className="checkOutFooterTitle">
+                {cartItems.reduce((sum, i) => sum + i.quantity, 0)}
+              </div>
+            </div>
+
+            <div className="checkoutFooterRow">
+              <div className="checkOutFooterTitle" style={{fontWeight:"800"}}>Grand Total:</div>
+              <div className="checkOutFooterTitle" style={{fontWeight:"800"}}>
+                ${cartItems
+                  .reduce((sum, i) => sum + i.price * i.quantity, 0)
+                  .toFixed(2)}
+              </div>
+            </div>
+            <Button
+              variant="primary"
+              className='checkoutButton'
+            >
+              Checkout
+            </Button>
           </div>
         )}
+
       </div>
     </div>
   );
